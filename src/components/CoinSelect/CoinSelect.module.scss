@@ -44,6 +44,12 @@
   border-radius: 0.25rem;
 }
 
+.viewport {
+  overflow-y: auto;
+
+  max-height: 10rem;
+}
+
 .item {
   position: relative;
 

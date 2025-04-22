@@ -3,7 +3,7 @@ import {
   CheckIcon,
   ChevronDownIcon,
 } from "@radix-ui/react-icons";
-import styles from "./CryptoSelect.module.scss";
+import styles from "./CoinSelect.module.scss";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Coin } from "@/models";
@@ -14,7 +14,7 @@ interface Props {
   model: CoinInputModel;
 }
 
-const CryptoSelect = observer((props: Props) => {
+const CoinSelect = observer((props: Props) => {
   const { model } = props;
 
   const { coins } = exchangeStore;
@@ -66,5 +66,5 @@ const CryptoSelect = observer((props: Props) => {
   );
 });
 
-CryptoSelect.displayName = "CryptoSelect";
-export { CryptoSelect };
+CoinSelect.displayName = "CoinSelect";
+export { CoinSelect };

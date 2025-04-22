@@ -1,6 +1,6 @@
 import styles from './NumberInput.module.scss';
 import {ChangeEvent, useCallback, useId} from "react";
-import { CryptoSelect } from "@/components/CryptoSelect/CryptoSelect";
+import { CoinSelect } from "@/components/CoinSelect/CoinSelect.tsx";
 import {CoinInputModel} from "@/store";
 import {observer} from "mobx-react-lite";
 
@@ -26,7 +26,7 @@ const NumberInput = observer((props: Props) => {
         <input value={model.amount} type="number" min={0} step={0.0000000000000000001} className={styles.input} onChange={handleChange} />
       </div>
 
-      <CryptoSelect model={model} />
+      <CoinSelect model={model} />
     </div>
   );
 });
