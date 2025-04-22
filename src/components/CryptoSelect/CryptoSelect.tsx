@@ -4,8 +4,15 @@ import {
   ChevronDownIcon,
 } from "@radix-ui/react-icons";
 import styles from "./CryptoSelect.module.scss";
+import {ChangeEvent, useCallback, useState} from "react";
 
 const CryptoSelect = () => {
+  const [search, setSearch] = useState("");
+
+  const handleChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  }, []);
+
   return (
     <Select.Root>
       <Select.Trigger className={styles.trigger} aria-label="Select cryptocurrency to change">
@@ -18,6 +25,8 @@ const CryptoSelect = () => {
 
       <Select.Portal>
         <Select.Content className={styles.content}>
+          <input type="text" className={styles.search} value={search} onChange={handleChangeSearch} />
+
           <Select.Viewport className={styles.viewport}>
             <Select.Item value="ETC" className={styles.item}>
               <Select.ItemText>{"ETC"}</Select.ItemText>

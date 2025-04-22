@@ -24,12 +24,24 @@
 .content {
   overflow: hidden;
 
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  padding: 0.5rem;
   border-radius: 0.5rem;
   background: var(--foreground);
 }
 
-.viewport {
-  padding: 0.5rem;
+.search {
+  outline: none;
+
+  font-size: 1rem;
+  color: var(--foreground);
+
+  border: 1px solid var(--background-dark);
+  background: var(--background-lighter);
+  border-radius: 0.25rem;
 }
 
 .item {
@@ -45,6 +57,11 @@
 
   padding: 0 2rem 0 1.5rem;
   user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--background-lighter);
+  }
 
   &[data-highlighted] {
     outline: none;
