@@ -1,12 +1,12 @@
 import styles from './ExchangeForm.module.scss';
-import { CryptoInput } from "@/components/CryptoInput/CryptoInput";
+import { NumberInput } from "@/components/NumberInput/NumberInput";
 
 const ExchangeForm = () => {
   return (
     <form className={styles.root}>
-      <CryptoInput label="You Send" />
+      <NumberInput label="You Send" />
 
-      <CryptoInput label="You Get" />
+      <NumberInput label="You Get" />
     </form>
   );
 };

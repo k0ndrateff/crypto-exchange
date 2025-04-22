@@ -1,11 +1,12 @@
-import styles from './CryptoInput.module.scss';
+import styles from './NumberInput.module.scss';
 import { useId } from "react";
+import { CryptoSelect } from "@/components/CryptoSelect/CryptoSelect";
 
 interface Props {
   label: string;
 }
 
-const CryptoInput = (props: Props) => {
+const NumberInput = (props: Props) => {
   const { label } = props;
 
   const id = useId();
@@ -17,8 +18,10 @@ const CryptoInput = (props: Props) => {
 
         <input type="number" min={0} className={styles.input} />
       </div>
+
+      <CryptoSelect />
     </div>
   );
 };
 
-export { CryptoInput };
+export { NumberInput };

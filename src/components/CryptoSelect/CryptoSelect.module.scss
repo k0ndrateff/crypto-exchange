@@ -1,0 +1,63 @@
+.trigger {
+  all: unset;
+
+  min-width: 8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.375rem;
+
+  font-size: 1rem;
+  color: var(--foreground);
+
+  padding: 0 1rem;
+  cursor: pointer;
+  border-radius: 0 0.4rem 0.4rem 0;
+  background: var(--background-dark);
+}
+
+.icon {
+  color: var(--foreground);
+}
+
+.content {
+  overflow: hidden;
+
+  border-radius: 0.5rem;
+  background: var(--foreground);
+}
+
+.viewport {
+  padding: 0.5rem;
+}
+
+.item {
+  position: relative;
+
+  height: 1.5rem;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 1rem;
+  color: var(--background-dark);
+
+  padding: 0 2rem 0 1.5rem;
+  user-select: none;
+
+  &[data-highlighted] {
+    outline: none;
+  }
+}
+
+.item-indicator {
+  position: absolute;
+  left: 0;
+
+  width: 1.5rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
