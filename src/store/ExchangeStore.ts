@@ -13,8 +13,8 @@ class ExchangeStore {
   targetModel: CoinInputModel;
 
   constructor() {
-    this.sourceModel = new CoinInputModel(this.convertFrom);
-    this.targetModel = new CoinInputModel(this.convertTo);
+    this.sourceModel = new CoinInputModel().onChangeCb(this.convertFrom);
+    this.targetModel = new CoinInputModel().onChangeCb(this.convertTo);
 
     makeAutoObservable(this);
   }

@@ -9,13 +9,17 @@ export class CoinInputModel {
 
   isLoading = false;
 
-  onChange: OnChangeCallback;
+  onChange?: OnChangeCallback;
 
-  constructor(onChange: OnChangeCallback) {
-    this.onChange = onChange;
-
+  constructor() {
     makeAutoObservable(this);
   }
+
+  onChangeCb = (onChange: OnChangeCallback) => {
+    this.onChange = onChange;
+
+    return this;
+  };
 
   setAmount = (amount: number): void => {
     this.amount = amount;
@@ -26,14 +30,14 @@ export class CoinInputModel {
   };
 
   changeCoin = (coin: Coin): void => {
-    this.coin = coin;
+    this.setCoin(coin);
 
-    this.onChange();
+    this.onChange?.();
   }
 
   changeAmount = (amount: number): void => {
-    this.amount = amount;
+    this.setAmount(amount);
 
-    this.onChange();
+    this.onChange?.();
   }
 }
