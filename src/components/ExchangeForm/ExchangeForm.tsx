@@ -1,10 +1,13 @@
 import styles from './ExchangeForm.module.scss';
+import { CryptoInput } from "@/components/CryptoInput/CryptoInput";
 
 const ExchangeForm = () => {
   return (
-    <div className={styles.root}>
-      
-    </div>
+    <form className={styles.root}>
+      <CryptoInput label="You Send" />
+
+      <CryptoInput label="You Get" />
+    </form>
   );
 };
 

@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+
+  border-radius: 0.5rem;
+  border: 1px solid var(--background-dark);
+  background: var(--background-lighter);
+}
+
+.input-wrapper {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  padding: 0.25rem 1rem 1rem 1rem;
+}
+
+.label {
+  font-size: 1rem;
+  color: var(--foreground);
+}
+
+.input {
+  width: 100%;
+
+  font-size: 1.5rem;
+  color: var(--foreground);
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
