@@ -1,45 +1,70 @@
-import { Select } from "radix-ui";
+import { Popover } from "radix-ui";
 import {
   CheckIcon,
   ChevronDownIcon,
 } from "@radix-ui/react-icons";
 import styles from "./CryptoSelect.module.scss";
-import {ChangeEvent, useCallback, useState} from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { Coin } from "@/models";
+import { CoinInputModel, exchangeStore } from "@/store";
+import { toJS } from "mobx";
 
-const CryptoSelect = () => {
+interface Props {
+  model: CoinInputModel;
+}
+
+const CryptoSelect = observer((props: Props) => {
+  const { model } = props;
+
+  const { coins } = exchangeStore;
+
   const [search, setSearch] = useState("");
 
   const handleChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   }, []);
 
+  const filteredCoins = useMemo<Coin[]>(() => {
+    const normalized = search.toLowerCase();
+    return toJS(coins).filter(c =>
+      c.name.toLowerCase().includes(normalized) ||
+      c.symbol.toLowerCase().includes(normalized)
+    );
+  }, [coins, search]);
+
   return (
-    <Select.Root>
-      <Select.Trigger className={styles.trigger} aria-label="Select cryptocurrency to change">
-        <Select.Value />
+    <Popover.Root>
+      <Popover.Trigger className={styles.trigger} aria-label="Select cryptocurrency to change">
+        {model.coin?.symbol}
 
-        <Select.Icon className={styles.icon}>
+        <span className={styles.icon}>
           <ChevronDownIcon/>
-        </Select.Icon>
-      </Select.Trigger>
+        </span>
+      </Popover.Trigger>
 
-      <Select.Portal>
-        <Select.Content className={styles.content}>
+      <Popover.Portal>
+        <Popover.Content className={styles.content}>
           <input type="text" className={styles.search} value={search} onChange={handleChangeSearch} />
 
-          <Select.Viewport className={styles.viewport}>
-            <Select.Item value="ETC" className={styles.item}>
-              <Select.ItemText>{"ETC"}</Select.ItemText>
+          <div className={styles.viewport}>
+            {filteredCoins.map(coin => (
+              <div key={coin.id} className={styles.item} onClick={() => model.setCoin(coin)}>
+                <p>{coin.symbol}</p>
 
-              <Select.ItemIndicator className={styles['item-indicator']}>
-                <CheckIcon />
-              </Select.ItemIndicator>
-            </Select.Item>
-          </Select.Viewport>
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
+                {model.coin?.id === coin.id && (
+                  <div className={styles['item-indicator']}>
+                    <CheckIcon />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
-};
+});
 
+CryptoSelect.displayName = "CryptoSelect";
 export { CryptoSelect };

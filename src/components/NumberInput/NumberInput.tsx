@@ -1,27 +1,35 @@
 import styles from './NumberInput.module.scss';
-import { useId } from "react";
+import {ChangeEvent, useCallback, useId} from "react";
 import { CryptoSelect } from "@/components/CryptoSelect/CryptoSelect";
+import {CoinInputModel} from "@/store";
+import {observer} from "mobx-react-lite";
 
 interface Props {
   label: string;
+  model: CoinInputModel;
 }
 
-const NumberInput = (props: Props) => {
-  const { label } = props;
+const NumberInput = observer((props: Props) => {
+  const { label, model } = props;
 
   const id = useId();
+
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    model.setAmount(Number(e.target.value));
+  }, [model]);
 
   return (
     <div className={styles.root}>
       <div className={styles['input-wrapper']}>
         <label htmlFor={id} className={styles.label}>{label}</label>
 
-        <input type="number" min={0} className={styles.input} />
+        <input value={model.amount} type="number" min={0} className={styles.input} onChange={handleChange} />
       </div>
 
-      <CryptoSelect />
+      <CryptoSelect model={model} />
     </div>
   );
-};
+});
 
+NumberInput.displayName = "NumberInput";
 export { NumberInput };
