@@ -9,3 +9,13 @@
   border-radius: 0.5rem;
   background: var(--background-light);
 }
+
+.button {
+  width: 100%;
+
+  font-size: 1rem;
+  color: var(--foreground);
+
+  background: var(--background-dark);
+  padding: 1rem 1.5rem;
+}

@@ -13,8 +13,8 @@ class ExchangeStore {
   targetModel: CoinInputModel;
 
   constructor() {
-    this.sourceModel = new CoinInputModel();
-    this.targetModel = new CoinInputModel();
+    this.sourceModel = new CoinInputModel(this.convertFrom);
+    this.targetModel = new CoinInputModel(this.convertTo);
 
     makeAutoObservable(this);
   }
@@ -23,7 +23,7 @@ class ExchangeStore {
     if (!this.sourceModel.coin || !this.targetModel.coin || !this.conversion)
       return `##########`;
 
-    return `1 ${this.sourceModel.coin.symbol} ≈ ${this.conversion.estimatedAmount} ${this.targetModel.coin.symbol}`;
+    return `1 ${this.sourceModel.coin.symbol} ≈ ${this.conversion.rate} ${this.targetModel.coin.symbol}`;
   }
 
   initialize = async (): Promise<void> => {
@@ -37,9 +37,7 @@ class ExchangeStore {
 
       this.sourceModel.setCoin(this.coins[0]);
       this.targetModel.setCoin(this.coins[1]);
-      this.sourceModel.setAmount(1);
-
-      await this.convertFrom();
+      this.sourceModel.changeAmount(1);
     }
     catch (error) {
       console.log(`Failed to fetch coins from API: ${error}`);
@@ -71,6 +69,52 @@ class ExchangeStore {
     finally {
       this.targetModel.isLoading = false;
     }
+  };
+
+  convertTo = async (): Promise<void> => {
+    if (!this.sourceModel.coin || !this.targetModel.coin)
+      return;
+
+    try {
+      this.sourceModel.isLoading = true;
+
+      const request: ConversionRequest = {
+        from: this.sourceModel.coin.id,
+        to: this.targetModel.coin.id,
+        toAmount: this.targetModel.amount
+      };
+
+      this.conversion = await exchangeApi.convertCoins(request);
+      this.sourceModel.setAmount(this.conversion.estimatedAmount);
+    }
+    catch (error) {
+      console.log(`Failed to perform conversion from API: ${error}`);
+    }
+    finally {
+      this.sourceModel.isLoading = false;
+    }
+  };
+
+  swapCoins = (): void => {
+    if (!this.sourceModel.coin || !this.targetModel.coin)
+      return;
+
+    const targetCoin = this.targetModel.coin;
+    const targetAmount = this.targetModel.amount;
+
+    this.targetModel.setCoin(this.sourceModel.coin);
+    this.targetModel.setAmount(this.sourceModel.amount);
+    this.sourceModel.setAmount(targetAmount);
+    this.sourceModel.setCoin(targetCoin);
+
+    this.convertFrom();
+  };
+
+  exchange = async (): Promise<void> => {
+    if (!this.sourceModel.coin || !this.targetModel.coin)
+      return;
+
+    window.alert(`You have successfully exchanged your ${this.sourceModel.amount} ${this.sourceModel.coin.symbol} to ${this.targetModel.amount} ${this.targetModel.coin.symbol}`);
   };
 }
 

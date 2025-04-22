@@ -11,12 +11,14 @@ const ExchangeForm = observer(() => {
   }, []);
 
   return (
-    <form className={styles.root}>
+    <form className={styles.root} onSubmit={exchangeStore.exchange}>
       <NumberInput model={exchangeStore.sourceModel} label="You Send" />
 
       <InfoDivider />
 
       <NumberInput model={exchangeStore.targetModel} label="You Get" />
+
+      <button type="submit" className={styles.button}>Exchange</button>
     </form>
   );
 });

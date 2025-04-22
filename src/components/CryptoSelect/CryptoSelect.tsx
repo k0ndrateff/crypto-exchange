@@ -49,7 +49,7 @@ const CryptoSelect = observer((props: Props) => {
 
           <div className={styles.viewport}>
             {filteredCoins.map(coin => (
-              <div key={coin.id} className={styles.item} onClick={() => model.setCoin(coin)}>
+              <div key={coin.id} className={styles.item} onClick={() => model.changeCoin(coin)}>
                 <p>{coin.symbol}</p>
 
                 {model.coin?.id === coin.id && (

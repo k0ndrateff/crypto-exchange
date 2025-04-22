@@ -15,7 +15,7 @@ const NumberInput = observer((props: Props) => {
   const id = useId();
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    model.setAmount(Number(e.target.value));
+    model.changeAmount(Number(e.target.value));
   }, [model]);
 
   return (
@@ -23,7 +23,7 @@ const NumberInput = observer((props: Props) => {
       <div className={styles['input-wrapper']}>
         <label htmlFor={id} className={styles.label}>{label}</label>
 
-        <input value={model.amount} type="number" min={0} className={styles.input} onChange={handleChange} />
+        <input value={model.amount} type="number" min={0} step={0.0000000000000000001} className={styles.input} onChange={handleChange} />
       </div>
 
       <CryptoSelect model={model} />

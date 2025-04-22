@@ -8,7 +8,7 @@ const InfoDivider = observer(() => {
     <div className={styles.root}>
       <p className={styles.rate}>Exchange Rate: <span>{exchangeStore.rateDisplay}</span></p>
 
-      <button type="button">
+      <button type="button" onClick={exchangeStore.swapCoins}>
         <HeightIcon />
       </button>
     </div>
