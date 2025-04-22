@@ -1,5 +1,18 @@
 :root {
+  /* Tailwind color palette */
+  --background-light: oklch(44.2% 0.017 285.786); // zinc-600
+  --background-dark: oklch(27.4% 0.006 286.033); // zinc-800
 
+  --foreground: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
+
+  font-family: "Golos Text", "Inter", sans-serif;
 }
 
 body {
@@ -11,4 +24,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background: var(--background-dark);
 }

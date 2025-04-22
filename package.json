@@ -12,6 +12,7 @@
   "dependencies": {
     "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0",
+    "radix-ui": "^1.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
