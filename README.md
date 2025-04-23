@@ -1,6 +1,6 @@
 # Crypto Exchange Widget 💰
 
-Take a look at [Live Example](https://example.com)!
+Take a look at [Live Example](https://crypto-exchange-lac.vercel.app/)!
 
 ## Goal
 
