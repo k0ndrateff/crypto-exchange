@@ -55,7 +55,7 @@ const NumberInput = observer((props: Props) => {
         {model.isLoading ? (
           <ScaleLoader height="1.65rem" color="var(--foreground)" />
         ) : (
-          <input value={amount} type="text" min={0} inputMode="decimal" step={INPUT_STEP} className={styles.input} onChange={handleChange} />
+          <input id={id} value={amount} type="text" min={0} inputMode="decimal" step={INPUT_STEP} className={styles.input} onChange={handleChange} />
         )}
       </div>
 
