@@ -28,4 +28,29 @@
   &:hover {
     background: var(--background-lighter);
   }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.loading {
+    cursor: default;
+
+    &:hover {
+      background: var(--background-dark);
+    }
+
+    &:active {
+      transform: none;
+    }
+  }
+
+  &.success {
+    cursor: default;
+    background: var(--success);
+
+    &:active {
+      transform: none;
+    }
+  }
 }

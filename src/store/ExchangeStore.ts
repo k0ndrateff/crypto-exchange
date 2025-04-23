@@ -9,6 +9,7 @@ class ExchangeStore {
   areCoinsLoading = false;
 
   conversion: ConversionResult | null = null;
+  successMessage: string | null = null;
 
   sourceModel: CoinInputModel;
   targetModel: CoinInputModel;
@@ -122,10 +123,14 @@ class ExchangeStore {
   };
 
   exchange = async (): Promise<void> => {
-    if (!this.sourceModel.coin || !this.targetModel.coin)
+    if (this.successMessage || !this.sourceModel.coin || !this.targetModel.coin || this.targetModel.error || this.sourceModel.error || !this.conversion)
       return;
 
-    window.alert(`You have successfully exchanged your ${this.sourceModel.amount} ${this.sourceModel.coin.symbol} to ${this.targetModel.amount} ${this.targetModel.coin.symbol}`);
+    this.successMessage = `Exchanged ${this.sourceModel.amount.toFixed(6)} $${this.sourceModel.coin.symbol} to ${this.targetModel.amount.toFixed(6)} $${this.targetModel.coin.symbol}`;
+
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 5000);
   };
 }
 

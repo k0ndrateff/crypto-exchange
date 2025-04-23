@@ -15,17 +15,27 @@
 }
 
 .button {
-  background: var(--background-medium);
+  width: 2.25rem;
+  height: 2.25rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   border: none;
   outline: none;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  background: var(--background-medium);
   transition: background 200ms;
 
   &:hover {
     background: var(--background-dark);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 }
 
