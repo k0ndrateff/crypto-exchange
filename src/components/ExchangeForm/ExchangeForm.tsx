@@ -18,6 +18,8 @@ const ExchangeForm = observer(() => {
     exchangeStore.exchange();
   }, []);
 
+  const isButtonDisabled = Boolean(exchangeStore.isLoading || exchangeStore.successMessage);
+
   return (
     <form className={styles.root} onSubmit={handleSubmit}>
       <NumberInput model={exchangeStore.sourceModel} label="You Send" />
@@ -26,7 +28,17 @@ const ExchangeForm = observer(() => {
 
       <NumberInput model={exchangeStore.targetModel} label="You Get" />
 
-      <button type="submit" disabled={Boolean(exchangeStore.isLoading || exchangeStore.successMessage)} className={cn(styles.button, { [styles.success]: Boolean(exchangeStore.successMessage), [styles.loading]: exchangeStore.isLoading })}>
+      <button
+        type="submit"
+
+        disabled={isButtonDisabled}
+        className={cn(
+          styles.button,
+          { [styles.success]: Boolean(exchangeStore.successMessage),
+            [styles.loading]: exchangeStore.isLoading
+          }
+        )}
+      >
         {exchangeStore.isLoading ? (
           <ScaleLoader height="1rem" color="var(--foreground)" />
         ) : exchangeStore.successMessage ? exchangeStore.successMessage : "Exchange"}
