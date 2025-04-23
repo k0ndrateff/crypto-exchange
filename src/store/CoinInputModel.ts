@@ -1,13 +1,14 @@
 import { makeAutoObservable } from "mobx";
 import { Coin } from "@/models";
 
-type OnChangeCallback = () => Promise<void>;
+type OnChangeCallback = () => void;
 
 export class CoinInputModel {
   amount: number = 0;
   coin: Coin | null = null;
 
   isLoading = false;
+  error: string | null = null;
 
   onChange?: OnChangeCallback;
 
@@ -36,6 +37,13 @@ export class CoinInputModel {
   }
 
   changeAmount = (amount: number): void => {
+    if (amount < 0) {
+      this.error = "Amount must be positive";
+    }
+    else {
+      this.error = null;
+    }
+
     this.setAmount(amount);
 
     this.onChange?.();

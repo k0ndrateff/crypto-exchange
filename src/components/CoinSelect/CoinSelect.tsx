@@ -9,6 +9,7 @@ import { observer } from "mobx-react-lite";
 import { Coin } from "@/models";
 import { CoinInputModel, exchangeStore } from "@/store";
 import { toJS } from "mobx";
+import {ClipLoader} from "react-spinners";
 
 interface Props {
   model: CoinInputModel;
@@ -17,13 +18,20 @@ interface Props {
 const CoinSelect = observer((props: Props) => {
   const { model } = props;
 
-  const { coins } = exchangeStore;
+  const { coins, areCoinsLoading } = exchangeStore;
 
   const [search, setSearch] = useState("");
+  const [opened, setOpened] = useState(false);
 
   const handleChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   }, []);
+
+  const handleSelectCoin = useCallback((coin: Coin) => {
+    model.changeCoin(coin);
+
+    setOpened(false);
+  }, [model]);
 
   const filteredCoins = useMemo<Coin[]>(() => {
     const normalized = search.toLowerCase();
@@ -34,13 +42,19 @@ const CoinSelect = observer((props: Props) => {
   }, [coins, search]);
 
   return (
-    <Popover.Root>
-      <Popover.Trigger className={styles.trigger} aria-label="Select cryptocurrency to change">
-        {model.coin?.symbol}
+    <Popover.Root open={opened} onOpenChange={setOpened}>
+      <Popover.Trigger className={styles.trigger} disabled={areCoinsLoading} aria-label="Select cryptocurrency to change">
+        {areCoinsLoading ? (
+          <ClipLoader />
+        ) : (
+          <>
+            {model.coin?.symbol}
 
-        <span className={styles.icon}>
+            <span className={styles.icon}>
           <ChevronDownIcon/>
         </span>
+          </>
+        )}
       </Popover.Trigger>
 
       <Popover.Portal>
@@ -49,8 +63,12 @@ const CoinSelect = observer((props: Props) => {
 
           <div className={styles.viewport}>
             {filteredCoins.map(coin => (
-              <div key={coin.id} className={styles.item} onClick={() => model.changeCoin(coin)}>
-                <p>{coin.symbol}</p>
+              <div key={coin.id} className={styles.item} onClick={() => handleSelectCoin(coin)}>
+                <div className={styles['item-wrapper']}>
+                  <p className={styles.symbol}>{coin.symbol}</p>
+
+                  <p className={styles.name}>{coin.name}</p>
+                </div>
 
                 {model.coin?.id === coin.id && (
                   <div className={styles['item-indicator']}>

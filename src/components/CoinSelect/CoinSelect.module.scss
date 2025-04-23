@@ -53,8 +53,6 @@
 .item {
   position: relative;
 
-  height: 1.5rem;
-
   display: flex;
   align-items: center;
 
@@ -72,6 +70,20 @@
   &[data-highlighted] {
     outline: none;
   }
+}
+
+.item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.symbol {
+  font-size: 1rem;
+}
+
+.name {
+  font-size: 0.75rem;
 }
 
 .item-indicator {

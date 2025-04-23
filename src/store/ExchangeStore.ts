@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import {Coin, ConversionRequest, ConversionResult} from "@/models";
 import { exchangeApi } from "@/api";
 import {CoinInputModel} from "@/store/CoinInputModel.ts";
+import {debounce} from "@/helpers";
 
 class ExchangeStore {
   coins: Coin[] = [];
@@ -13,8 +14,8 @@ class ExchangeStore {
   targetModel: CoinInputModel;
 
   constructor() {
-    this.sourceModel = new CoinInputModel().onChangeCb(this.convertFrom);
-    this.targetModel = new CoinInputModel().onChangeCb(this.convertTo);
+    this.sourceModel = new CoinInputModel().onChangeCb(debounce(this.convertFrom, 300));
+    this.targetModel = new CoinInputModel().onChangeCb(debounce(this.convertTo, 300));
 
     makeAutoObservable(this);
   }
@@ -29,6 +30,8 @@ class ExchangeStore {
   initialize = async (): Promise<void> => {
     try {
       this.areCoinsLoading = true;
+      this.targetModel.isLoading = true;
+      this.sourceModel.setAmount(1);
 
       this.coins = await exchangeApi.getCoins();
 
@@ -37,18 +40,20 @@ class ExchangeStore {
 
       this.sourceModel.setCoin(this.coins[0]);
       this.targetModel.setCoin(this.coins[1]);
-      this.sourceModel.changeAmount(1);
+
+      await this.convertFrom();
     }
     catch (error) {
       console.log(`Failed to fetch coins from API: ${error}`);
     }
     finally {
+      this.targetModel.isLoading = false;
       this.areCoinsLoading = false;
     }
   };
 
   convertFrom = async (): Promise<void> => {
-    if (!this.sourceModel.coin || !this.targetModel.coin)
+    if (!this.sourceModel.coin || !this.targetModel.coin || this.sourceModel.error)
       return;
 
     try {
@@ -72,7 +77,7 @@ class ExchangeStore {
   };
 
   convertTo = async (): Promise<void> => {
-    if (!this.sourceModel.coin || !this.targetModel.coin)
+    if (!this.sourceModel.coin || !this.targetModel.coin || this.targetModel.error)
       return;
 
     try {

@@ -3,6 +3,8 @@ import {ChangeEvent, useCallback, useId} from "react";
 import { CoinSelect } from "@/components/CoinSelect/CoinSelect.tsx";
 import {CoinInputModel} from "@/store";
 import {observer} from "mobx-react-lite";
+import {ClipLoader} from "react-spinners";
+import cn from "classnames";
 
 interface Props {
   label: string;
@@ -19,11 +21,15 @@ const NumberInput = observer((props: Props) => {
   }, [model]);
 
   return (
-    <div className={styles.root}>
+    <div className={cn(styles.root, { [styles.invalid]: Boolean(model.error) })}>
       <div className={styles['input-wrapper']}>
         <label htmlFor={id} className={styles.label}>{label}</label>
 
-        <input value={model.amount} type="number" min={0} step={0.0000000000000000001} className={styles.input} onChange={handleChange} />
+        {model.isLoading ? (
+          <ClipLoader />
+        ) : (
+          <input value={model.amount} type="number" min={0} step={0.0000000000000000001} className={styles.input} onChange={handleChange} />
+        )}
       </div>
 
       <CoinSelect model={model} />
