@@ -1,11 +1,12 @@
 :root {
   /* Tailwind color palette */
-  --background-lighter: oklch(55.2% 0.016 285.938); // zinc-500
-  --background-light: oklch(44.2% 0.017 285.786); // zinc-600
-  --background-dark: oklch(27.4% 0.006 286.033); // zinc-800
+  --background-lighter: oklch(44.6% 0.043 257.281); // slate-600
+  --background-light: oklch(37.2% 0.044 257.287); // slate-700
+  --background-medium: oklch(27.9% 0.041 260.031); // slate-800
+  --background-dark: oklch(20.8% 0.042 265.755); // slate-900
+  --foreground: oklch(98.4% 0.003 247.858); // slate-50
+  --foreground-dark: oklch(86.9% 0.022 252.894); // slate-300
   --error: oklch(63.7% 0.237 25.331); // red-500
-
-  --foreground: #ffffff;
 }
 
 * {

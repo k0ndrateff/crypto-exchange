@@ -1,8 +1,9 @@
 .root {
+  height: 4.3125rem;
+
   display: flex;
 
   border-radius: 0.5rem;
-  border: 1px solid var(--background-dark);
   background: var(--background-lighter);
   transition: border 200ms;
 
@@ -18,18 +19,29 @@
   flex-direction: column;
   gap: 0.25rem;
 
-  padding: 0.25rem 1rem 1rem 1rem;
+  padding: 0.325rem 1rem 0.75rem 1rem;
+}
+
+.top-wrapper {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground-dark);
+}
+
+.error {
   font-size: 1rem;
-  color: var(--foreground);
+  color: var(--error);
 }
 
 .input {
   width: 100%;
 
-  font-size: 1.5rem;
+  font-size: 1.625rem;
   color: var(--foreground);
 
   background: transparent;

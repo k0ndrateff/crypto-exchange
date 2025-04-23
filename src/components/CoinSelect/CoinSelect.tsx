@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 import { Coin } from "@/models";
 import { CoinInputModel, exchangeStore } from "@/store";
 import { toJS } from "mobx";
-import {ClipLoader} from "react-spinners";
+import { ScaleLoader} from "react-spinners";
 
 interface Props {
   model: CoinInputModel;
@@ -44,22 +44,24 @@ const CoinSelect = observer((props: Props) => {
   return (
     <Popover.Root open={opened} onOpenChange={setOpened}>
       <Popover.Trigger className={styles.trigger} disabled={areCoinsLoading} aria-label="Select cryptocurrency to change">
-        {areCoinsLoading ? (
-          <ClipLoader />
+        {areCoinsLoading || !model.coin ? (
+          <ScaleLoader height="1.25rem" color="var(--foreground)" />
         ) : (
           <>
-            {model.coin?.symbol}
+            {model.coin.symbol}
 
             <span className={styles.icon}>
-          <ChevronDownIcon/>
-        </span>
+              <ChevronDownIcon/>
+            </span>
           </>
         )}
       </Popover.Trigger>
 
       <Popover.Portal>
         <Popover.Content className={styles.content}>
-          <input type="text" className={styles.search} value={search} onChange={handleChangeSearch} />
+          <div className={styles['search-wrapper']}>
+            <input type="text" className={styles.search} value={search} onChange={handleChangeSearch} placeholder="Search coins..." />
+          </div>
 
           <div className={styles.viewport}>
             {filteredCoins.map(coin => (

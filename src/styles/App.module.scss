@@ -4,6 +4,21 @@
   gap: 0.5rem;
 }
 
+.header {
+  position: relative;
+
+  display: flex;
+}
+
+.icon {
+  position: absolute;
+  right: 1.5rem;
+  top: -1.8rem;
+
+  width: 6rem;
+  height: auto;
+}
+
 .heading {
   font-size: 2rem;
   color: var(--foreground);

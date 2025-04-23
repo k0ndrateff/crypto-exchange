@@ -4,6 +4,7 @@ import {InfoDivider} from "@/components/InfoDivider/InfoDivider";
 import {observer} from "mobx-react-lite";
 import {useEffect} from "react";
 import {exchangeStore} from "@/store";
+import {ScaleLoader} from "react-spinners";
 
 const ExchangeForm = observer(() => {
   useEffect(() => {
@@ -18,7 +19,11 @@ const ExchangeForm = observer(() => {
 
       <NumberInput model={exchangeStore.targetModel} label="You Get" />
 
-      <button type="submit" className={styles.button}>Exchange</button>
+      <button type="submit" disabled={exchangeStore.isLoading} className={styles.button}>
+        {exchangeStore.isLoading ? (
+          <ScaleLoader height="1rem" color="var(--foreground)" />
+        ) : "Exchange"}
+      </button>
     </form>
   );
 });

@@ -30,6 +30,10 @@ export class CoinInputModel {
     this.coin = coin;
   };
 
+  clearError = (): void => {
+    this.error = null;
+  };
+
   changeCoin = (coin: Coin): void => {
     this.setCoin(coin);
 

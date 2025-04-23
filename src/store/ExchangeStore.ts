@@ -20,8 +20,12 @@ class ExchangeStore {
     makeAutoObservable(this);
   }
 
-  get rateDisplay() {
-    if (!this.sourceModel.coin || !this.targetModel.coin || !this.conversion)
+  get isLoading(): boolean {
+    return !this.sourceModel.coin || !this.targetModel.coin || !this.conversion || this.sourceModel.isLoading || this.targetModel.isLoading;
+  }
+
+  get rateDisplay(): string {
+    if (!this.sourceModel.coin || !this.targetModel.coin || !this.conversion || this.sourceModel.isLoading || this.targetModel.isLoading)
       return `##########`;
 
     return `1 ${this.sourceModel.coin.symbol} ≈ ${this.conversion.rate} ${this.targetModel.coin.symbol}`;
@@ -57,6 +61,7 @@ class ExchangeStore {
       return;
 
     try {
+      this.targetModel.clearError();
       this.targetModel.isLoading = true;
 
       const request: ConversionRequest = {
@@ -81,6 +86,7 @@ class ExchangeStore {
       return;
 
     try {
+      this.sourceModel.clearError();
       this.sourceModel.isLoading = true;
 
       const request: ConversionRequest = {
