@@ -8,7 +8,7 @@
   transition: border 200ms;
 
   &.invalid {
-    border: 1px solid var(--error);
+    outline: 1px solid var(--error);
   }
 }
 
@@ -24,7 +24,7 @@
 
 .top-wrapper {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .label {
@@ -34,7 +34,8 @@
 }
 
 .error {
-  font-size: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--error);
 }
 

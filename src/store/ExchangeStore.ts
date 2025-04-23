@@ -28,7 +28,7 @@ class ExchangeStore {
     if (!this.sourceModel.coin || !this.targetModel.coin || !this.conversion || this.sourceModel.isLoading || this.targetModel.isLoading)
       return `##########`;
 
-    return `1 ${this.sourceModel.coin.symbol} ≈ ${this.conversion.rate} ${this.targetModel.coin.symbol}`;
+    return `1 ${this.sourceModel.coin.symbol} ≈ ${this.conversion.rate.toFixed(6)} ${this.targetModel.coin.symbol}`;
   }
 
   initialize = async (): Promise<void> => {

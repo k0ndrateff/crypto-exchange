@@ -1,10 +1,12 @@
 import styles from './NumberInput.module.scss';
-import {ChangeEvent, useCallback, useId} from "react";
+import {ChangeEvent, useCallback, useEffect, useId, useState} from "react";
 import { CoinSelect } from "@/components/CoinSelect/CoinSelect.tsx";
 import {CoinInputModel} from "@/store";
 import {observer} from "mobx-react-lite";
 import {ScaleLoader} from "react-spinners";
 import cn from "classnames";
+
+const INPUT_STEP = 1 / 1000000000000;
 
 interface Props {
   label: string;
@@ -16,8 +18,27 @@ const NumberInput = observer((props: Props) => {
 
   const id = useId();
 
+  const [amount, setAmount] = useState(String(model.amount));
+
+  useEffect(() => {
+    setAmount(String(model.amount));
+  }, [model.amount]);
+
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    model.changeAmount(Number(e.target.value));
+    let newValue = e.target.value;
+
+    // replace comma with a dot (both are decimal dividers, but comma is not recognized in js)
+    newValue = newValue.replace(",", ".");
+
+    if (/^[0-9]*[.]?[0-9]*$/.test(newValue) || newValue === "") {
+      setAmount(newValue);
+
+      const numericValue = Number(newValue);
+
+      if (!isNaN(numericValue)) {
+        model.changeAmount(numericValue);
+      }
+    }
   }, [model]);
 
   return (
@@ -34,7 +55,7 @@ const NumberInput = observer((props: Props) => {
         {model.isLoading ? (
           <ScaleLoader height="1.65rem" color="var(--foreground)" />
         ) : (
-          <input value={model.amount} type="number" min={0} step={0.0000000000000000001} className={styles.input} onChange={handleChange} />
+          <input value={amount} type="text" min={0} inputMode="decimal" step={INPUT_STEP} className={styles.input} onChange={handleChange} />
         )}
       </div>
 
