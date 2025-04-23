@@ -1,10 +1,10 @@
 import styles from './ExchangeForm.module.scss';
 import { NumberInput } from "@/components/NumberInput/NumberInput";
-import {InfoDivider} from "@/components/InfoDivider/InfoDivider";
-import {observer} from "mobx-react-lite";
-import {FormEvent, useCallback, useEffect} from "react";
-import {exchangeStore} from "@/store";
-import {ScaleLoader} from "react-spinners";
+import { InfoDivider } from "@/components/InfoDivider/InfoDivider";
+import { observer } from "mobx-react-lite";
+import { FormEvent, useCallback, useEffect } from "react";
+import { exchangeStore } from "@/store";
+import { ScaleLoader} from "react-spinners";
 import cn from "classnames";
 
 const ExchangeForm = observer(() => {

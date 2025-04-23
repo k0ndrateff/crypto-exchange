@@ -1,8 +1,10 @@
 import { makeAutoObservable } from "mobx";
-import {Coin, ConversionRequest, ConversionResult} from "@/models";
+import { Coin, ConversionRequest, ConversionResult } from "@/models";
 import { exchangeApi } from "@/api";
-import {CoinInputModel} from "@/store/CoinInputModel.ts";
-import {debounce} from "@/helpers";
+import { CoinInputModel } from "@/store/CoinInputModel";
+import { debounce } from "@/helpers";
+
+const EXCHANGE_DEBOUNCE = 350;
 
 class ExchangeStore {
   coins: Coin[] = [];
@@ -15,8 +17,8 @@ class ExchangeStore {
   targetModel: CoinInputModel;
 
   constructor() {
-    this.sourceModel = new CoinInputModel().onChangeCb(debounce(this.convertFrom, 300));
-    this.targetModel = new CoinInputModel().onChangeCb(debounce(this.convertTo, 300));
+    this.sourceModel = new CoinInputModel().onChangeCb(debounce(this.convertFrom, EXCHANGE_DEBOUNCE));
+    this.targetModel = new CoinInputModel().onChangeCb(debounce(this.convertTo, EXCHANGE_DEBOUNCE));
 
     makeAutoObservable(this);
   }
@@ -93,7 +95,7 @@ class ExchangeStore {
       const request: ConversionRequest = {
         from: this.sourceModel.coin.id,
         to: this.targetModel.coin.id,
-        toAmount: this.targetModel.amount
+        toAmount: this.targetModel.amount,
       };
 
       this.conversion = await exchangeApi.convertCoins(request);

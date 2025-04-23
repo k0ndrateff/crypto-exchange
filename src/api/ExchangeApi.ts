@@ -1,7 +1,6 @@
 import axios from "axios";
-import {Coin, ConversionResult} from "@/models";
-import {ApiRoutes} from "./ApiRoutes";
-import {ConversionRequest} from "@/models/ConversionRequest.ts";
+import { Coin, ConversionResult, ConversionRequest } from "@/models";
+import { ApiRoutes } from "./ApiRoutes";
 
 class ExchangeApi {
   private _axios = axios.create({

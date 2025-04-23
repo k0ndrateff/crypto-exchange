@@ -1,13 +1,14 @@
-interface ConversionRequestBase {
+interface ConversionRequestFrom {
   from: number;
   to: number;
-}
-
-interface ConversionRequestFrom extends ConversionRequestBase {
   fromAmount: number;
+  toAmount?: never;
 }
 
-interface ConversionRequestTo extends ConversionRequestBase {
+interface ConversionRequestTo {
+  from: number;
+  to: number;
+  fromAmount?: never;
   toAmount: number;
 }
 

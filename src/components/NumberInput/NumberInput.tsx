@@ -1,9 +1,9 @@
 import styles from './NumberInput.module.scss';
-import {ChangeEvent, useCallback, useEffect, useId, useState} from "react";
-import { CoinSelect } from "@/components/CoinSelect/CoinSelect.tsx";
-import {CoinInputModel} from "@/store";
-import {observer} from "mobx-react-lite";
-import {ScaleLoader} from "react-spinners";
+import { ChangeEvent, useCallback, useEffect, useId, useState } from "react";
+import { CoinSelect } from "@/components/CoinSelect/CoinSelect";
+import { CoinInputModel } from "@/store";
+import { observer } from "mobx-react-lite";
+import { ScaleLoader } from "react-spinners";
 import cn from "classnames";
 
 const INPUT_STEP = 1 / 1000000000000;

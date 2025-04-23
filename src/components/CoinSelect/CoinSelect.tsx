@@ -35,6 +35,7 @@ const CoinSelect = observer((props: Props) => {
 
   const filteredCoins = useMemo<Coin[]>(() => {
     const normalized = search.toLowerCase();
+
     return toJS(coins).filter(c =>
       c.name.toLowerCase().includes(normalized) ||
       c.symbol.toLowerCase().includes(normalized)

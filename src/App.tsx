@@ -1,6 +1,6 @@
 import styles from '@/styles/App.module.scss';
 import { ExchangeForm } from "@/components";
-import {ChestIcon} from "@/assets";
+import { ChestIcon } from "@/assets";
 
 const App = () => {
 
@@ -13,6 +13,8 @@ const App = () => {
       </div>
 
       <ExchangeForm />
+
+      <span className={styles.tag}>Handcrafted by @k0ndrateff</span>
     </div>
   );
 };
