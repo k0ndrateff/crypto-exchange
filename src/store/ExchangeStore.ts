@@ -12,6 +12,7 @@ class ExchangeStore {
 
   conversion: ConversionResult | null = null;
   successMessage: string | null = null;
+  successMessageTimeout: ReturnType<typeof setTimeout> | null = null;
 
   sourceModel: CoinInputModel;
   targetModel: CoinInputModel;
@@ -64,6 +65,7 @@ class ExchangeStore {
       return;
 
     try {
+      this.clearSuccessMessage();
       this.targetModel.clearError();
       this.targetModel.isLoading = true;
 
@@ -89,6 +91,7 @@ class ExchangeStore {
       return;
 
     try {
+      this.clearSuccessMessage();
       this.sourceModel.clearError();
       this.sourceModel.isLoading = true;
 
@@ -130,9 +133,19 @@ class ExchangeStore {
 
     this.successMessage = `Exchanged ${this.sourceModel.amount.toFixed(6)} $${this.sourceModel.coin.symbol} to ${this.targetModel.amount.toFixed(6)} $${this.targetModel.coin.symbol}`;
 
-    setTimeout(() => {
-      this.successMessage = null;
+    this.successMessageTimeout = setTimeout(() => {
+      this.clearSuccessMessage();
     }, 5000);
+  };
+
+  clearSuccessMessage = (): void => {
+    this.successMessage = null;
+
+    if (this.successMessageTimeout) {
+      clearTimeout(this.successMessageTimeout);
+
+      this.successMessageTimeout = null;
+    }
   };
 }
 
